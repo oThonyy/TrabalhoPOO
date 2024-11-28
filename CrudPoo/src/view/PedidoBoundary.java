@@ -3,7 +3,6 @@ package view;
 import java.util.Optional;
 
 import controller.PedidoControl;
-import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -93,6 +92,7 @@ public class PedidoBoundary implements Tela {
     }
 
     
+    @SuppressWarnings("unchecked")
     public void gerarColunas() {
         TableColumn<Pedido, Long> col1 = new TableColumn<>("PedidoId");
         col1.setCellValueFactory(new PropertyValueFactory<>("pedidoId"));
@@ -165,17 +165,16 @@ public class PedidoBoundary implements Tela {
     }
 
     public void ligacoes() {
-        control.pedidoIdProperty().addListener((obs, antigo, novo) -> lblPedidoId.setText(String.valueOf(novo)));
+        control.pedidoIdProperty().addListener( (obs, antigo, novo) -> {
+            lblPedidoId.setText(String.valueOf(novo) );
+        });
+
         Bindings.bindBidirectional(control.produtosProperty(), txtProdutos.textProperty());
         Bindings.bindBidirectional(control.dataPedidProperty(), txtDataPedido.textProperty());
         Bindings.bindBidirectional(control.valorTotalProperty(), txtValorTotal.textProperty());
         Bindings.bindBidirectional(control.formaPagProperty(), txtFormaPag.textProperty());
         Bindings.bindBidirectional(control.statusPedProperty(), txtStatusPed.textProperty());
 
-    }
-
-    public static void main(String[] args) {
-        Application.launch(MainBoundary.class, args);
     }
     
 }
